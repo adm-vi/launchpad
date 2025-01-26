@@ -320,12 +320,12 @@ st.markdown("""
 
 # Add the button
 if st.button("🪦 Pivot", type="secondary"):
-    st.switch_page("pages/1_💡_Ideate.py")
+    st.switch_page("pages/1_📓_Ideas.py")
 
 # Add the text below
 st.markdown("""
         <div style='font-style: italic; color: #666; font-size: 0.9em; margin-top: 8px;'>
-            "better to have tried and failed than to have never tried at all"
+            "better to have tried and failed than to never have tried at all"
         </div>
     </div>
 """, unsafe_allow_html=True)

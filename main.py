@@ -52,13 +52,13 @@ st.markdown("""
     sustainable, revenue-generating ventures.**
     
     **Launchpad's AI can help you:**
-
+            
+    - **Ideas** - Your ideas are safe here.
     - **Ideate** - Need help refining your idea? Looking for new inspiration? We've got you covered.
     - **Monetize** - Let our AI analyze various pricing strategies and select the best one for your idea
-    - **Plan** - Develop a plan to implement your idea
     - **Benchmark** - Compare your idea to potential competition
-    - **Go-to-Market** - Get help onboarding new users and gaining traction
-    - **Pivot** - Let's try something else
+    - **Pitch** - Ideas on a page.
+    - **Feedback** - Proceed or pivot.
     </div>
 """, unsafe_allow_html=True)
 
