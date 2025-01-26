@@ -54,60 +54,33 @@ if st.session_state.selected_idea is None:
 
 ######################################################################################
 
-# Custom CSS for slide styling
-st.markdown("""
-    <style>
-        .slide {
-            background-color: white;
-            border-radius: 10px;
-            padding: 30px;
-            margin: 20px 0;
-            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-        }
-        .slide-number {
-            color: #666;
-            font-size: 0.8em;
-            margin-bottom: 10px;
-        }
-        .slide-title {
-            color: #1f1f1f;
-            font-size: 1.8em;
-            margin-bottom: 20px;
-            font-weight: bold;
-        }
-        .slide-content {
-            margin-top: 20px;
-        }
-    </style>
-""", unsafe_allow_html=True)
-
-# Function to create slide container
-def create_slide(title, slide_number, content):
-    # Create a container for the entire slide
+def create_slide(title, slide_number, content_fn):
+    slide_html_start = f"""
+        <div class="slide">
+            <div class="slide-number">SLIDE {slide_number}</div>
+            <div class="slide-title">{title}</div>
+            <div class="slide-content">
+    """
+    slide_html_end = """
+            </div>
+        </div>
+    """
+    
     with st.container():
-        # Start the slide div
-        st.markdown(f"""
-            <div class="slide">
-                <div class="slide-number">SLIDE {slide_number}</div>
-                <div class="slide-title">{title}</div>
-                <div class="slide-content">
-            """, unsafe_allow_html=True)
-        
-        # Add the content
-        content()
-        
-        # Close the slide div
-        st.markdown("</div></div>", unsafe_allow_html=True)
+        st.markdown(slide_html_start, unsafe_allow_html=True)
+        content_fn()  # Execute the content function inside the container
+        st.markdown(slide_html_end, unsafe_allow_html=True)
 
 # Slide 1: Problem & Solution
 def slide1_content():
-    col1, col2 = st.columns(2)
-    with col1:
-        st.markdown("### The Problem")
+    cols = st.columns(2)
+    with cols[0]:
+        st.markdown('<h3 style="font-family: Geist; margin-bottom: 0.5rem;">The Problem</h3>', unsafe_allow_html=True)
         st.text_area("Problem Description", key="problem", height=150, label_visibility="collapsed")
-    with col2:
-        st.markdown("### Our Solution")
+    with cols[1]:
+        st.markdown('<h3 style="font-family: Geist; margin-bottom: 0.5rem;">Our Solution</h3>', unsafe_allow_html=True)
         st.text_area("Solution Description", key="solution", height=150, label_visibility="collapsed")
+
 create_slide("Problem & Solution", 1, slide1_content)
 
 # Slide 2: Market Opportunity

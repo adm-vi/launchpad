@@ -181,3 +181,67 @@ hr.header-divider {
 [data-testid="stSelectbox"] label p {
     font-size: 1.2rem !important;  /* Reduced from 2.5rem to 1.2rem */
 }
+
+/* Slide container styles */
+.slide {
+    background: white;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    padding: 2rem;
+    margin-bottom: 2rem;
+    position: relative;
+    overflow: hidden;
+}
+
+.slide-number {
+    position: absolute;
+    top: 1rem;
+    right: 1rem;
+    font-family: 'Geist Mono', monospace;
+    font-size: 0.8rem;
+    color: #666;
+    z-index: 1;
+}
+
+.slide-title {
+    font-family: 'Funnel Display', sans-serif;
+    font-size: 1.8rem;
+    font-weight: 700;
+    margin-bottom: 1.5rem;
+    color: #333;
+    position: relative;
+    z-index: 1;
+}
+
+.slide-content {
+    font-family: 'Geist', sans-serif;
+    position: relative;
+    z-index: 1;
+}
+
+/* Override Streamlit's default container padding inside slides */
+.slide .stMarkdown {
+    padding: 0 !important;
+}
+
+.slide .element-container {
+    margin: 0 !important;
+}
+
+/* Ensure columns inside slides maintain proper spacing */
+.slide .row-widget {
+    margin: 0 !important;
+    padding: 0 !important;
+}
+
+.slide [data-testid="column"] {
+    padding: 0.5rem !important;
+}
+
+/* Ensure text areas inside slides are properly styled */
+.slide textarea {
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    background: #f8f8f8;
+    font-family: 'Geist', sans-serif;
+}
