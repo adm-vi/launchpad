@@ -1,0 +1,183 @@
+/* Import Geist Mono font */
+@import url('https://fonts.googleapis.com/css2?family=Geist+Mono:wght@400;700&display=swap');
+
+/* Import Funnel Sans font */
+@import url('https://fonts.googleapis.com/css2?family=Funnel+Sans:wght@400;700&display=swap');
+
+/* Import Funnel Display font */
+@import url('https://fonts.googleapis.com/css2?family=Funnel+Display:wght@400;700&display=swap');
+
+/* Import Geist font */
+@import url('https://fonts.googleapis.com/css2?family=Geist:wght@400;700&display=swap');
+
+/* Apply to specific elements or globally */
+body {
+    font-family: 'Geist Mono', monospace;
+}
+
+/* Header styles */
+div.header-container {
+    padding: 0.5rem 0;
+}
+
+h1.header-title {
+    font-family: 'Funnel Display';
+    font-size: 3.2rem;
+    font-weight: 800;
+    letter-spacing: -2px;
+    margin: 0;
+}
+
+p.header-subtitle {
+    font-family: 'Geist';
+    font-size: 1rem;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    color: #555;
+    margin: 0.1rem 0 0;
+}
+
+p.header-description {
+    font-family: 'Geist';
+    font-size: 0.8rem;
+    letter-spacing: 0.0px;
+    text-transform: lowercase;
+    color: #555;
+    margin: 1.0rem 0 0;
+}
+
+hr.header-divider {
+    margin: 1rem 0;
+    border: none;
+    border-top: 3px solid #ccc;
+}
+
+/* Sidebar styles */
+[data-testid="stSidebar"] {
+    background: linear-gradient(
+        135deg, 
+        #a13d7a 0%,    /* Brighter magenta */
+        #c66954 30%,   /* Brighter rust */
+        #9e8339 50%,   /* Brighter mustard */
+        #3d7349 70%,   /* Brighter forest green */
+        #2a6075 100%   /* Brighter teal */
+    );
+}
+
+[data-testid="stSidebar"]::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-image: url('data:image/svg+xml,%3Csvg viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg"%3E%3Cfilter id="noise"%3E%3CfeTurbulence type="fractalNoise" baseFrequency="0.9" numOctaves="4" stitchTiles="stitch"/%3E%3C/filter%3E%3Crect width="100%" height="100%" filter="url(%23noise)" opacity="0.4"/%3E%3C/svg%3E');
+    opacity: 0.3;
+}
+
+[data-testid="stSidebar"] > div:first-child {
+    background-color: rgba(255, 255, 255, 0.05);
+    backdrop-filter: blur(3px);
+}
+
+[data-testid="stSidebar"] .stSelectbox label,
+[data-testid="stSidebar"] .stSelectbox div,
+[data-testid="stSidebar"] span {
+    color: white !important;
+    font-family: 'Geist Mono', monospace !important;
+}
+
+[data-testid="stSidebar"] .stSelectbox [data-baseweb="select"] > div {
+    background: rgba(255,255,255,0.1);
+    color: white;
+    font-family: 'Geist Mono', monospace;
+}
+
+/* Sidebar navigation spacing adjustments */
+[data-testid="stSidebarNav"] {
+    margin-top: -0.2rem;
+}
+
+[data-testid="stSidebarNav"] + div {
+    margin-top: -0.5rem;
+}
+
+/* Reusable gradient card */
+.gradient-card {
+    background: linear-gradient(
+        135deg, 
+        #a13d7a 0%,    /* Brighter magenta */
+        #c66954 30%,   /* Brighter rust */
+        #9e8339 50%,   /* Brighter mustard */
+        #3d7349 70%,   /* Brighter forest green */
+        #2a6075 100%   /* Brighter teal */
+    );
+    padding: 10px;
+    border-radius: 12px;
+    box-shadow: 0 3px 4px rgba(0,0,0,0.1);
+    margin-bottom: 15px;
+}
+
+.gradient-card h3 {
+    color: #fff;
+    margin: 0 0 4px;
+    font-family: 'Geist Mono', monospace;
+    padding-left: 12px;
+}
+
+.gradient-card .content {
+    padding: 4px;
+}
+
+.gradient-card .item {
+    margin: 4px 0;
+    color: #fff;
+    padding-left: 12px;
+}
+
+/* Main content selectbox styling */
+[data-testid="stSelectbox"] {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background: linear-gradient(
+        135deg, 
+        #a13d7a 0%,    /* Brighter magenta */
+        #c66954 30%,   /* Brighter rust */
+        #9e8339 50%,   /* Brighter mustard */
+        #3d7349 70%,   /* Brighter forest green */
+        #2a6075 100%   /* Brighter teal */
+    );
+    padding: 10px;
+    border-radius: 3px;
+    margin-bottom: 15px;
+}
+
+[data-testid="stSelectbox"] > label {
+    flex: 1;  /* Takes up left side */
+    font-size: 1.2rem !important;
+    padding-left: 20px;  /* More indentation */
+}
+
+[data-testid="stSelectbox"] > div {
+    flex: 1;  /* Takes up right side */
+    margin-left: 20px;  /* Space between label and dropdown */
+    padding-right: 10px;
+}
+
+[data-testid="stSelectbox"] label,
+[data-testid="stSelectbox"] div,
+[data-testid="stSelectbox"] span {
+    color: white !important;
+    font-family: 'Geist Mono', monospace !important;
+}
+
+[data-testid="stSelectbox"] [data-baseweb="select"] > div {
+    background: rgba(255,255,255,0.1);
+    color: white;
+    font-family: 'Geist Mono', monospace;
+}
+
+[data-testid="stSelectbox"] label p {
+    font-size: 1.2rem !important;  /* Reduced from 2.5rem to 1.2rem */
+}
