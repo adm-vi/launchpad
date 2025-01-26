@@ -1,11 +1,11 @@
 import streamlit as st
 import pandas as pd
-import plotly.express as px
 import plotly.graph_objects as go
+from plotly.subplots import make_subplots
 from utils import load_css
 
 ######################################################################################
-# page configurations
+# Page configurations
 ######################################################################################
 
 st.set_page_config(
@@ -16,17 +16,9 @@ st.set_page_config(
 
 load_css()
 
-st.logo(
-    "/Users/alexmayo/Documents/my_projects/launchpad/sunglasses.png",
-    size="large",
-    link="https://streamlit.io/gallery",
-)
-
-st.sidebar.image(
-    "/Users/alexmayo/Documents/my_projects/launchpad/launchpad.png", 
-    width=None,  # Remove width to auto-fill
-    use_container_width=True  # Makes image fill width of sidebar
-)
+# Initialize selected_idea as None if not exists
+if 'selected_idea' not in st.session_state:
+    st.session_state.selected_idea = None
 
 st.markdown("""
     <div class="header-container">
@@ -34,12 +26,7 @@ st.markdown("""
         <p class="header-subtitle">VC STYLE FINANCIAL MODELING</p>
         <hr class="header-divider">
     </div>
-""", unsafe_allow_html=True
-)
-
-# Initialize selected_idea as None if not exists
-if 'selected_idea' not in st.session_state:
-    st.session_state.selected_idea = None
+""", unsafe_allow_html=True)
 
 # Add selectbox with None as initial state
 add_selectbox = st.selectbox(
@@ -50,10 +37,18 @@ add_selectbox = st.selectbox(
    key="selected_idea"
 )
 
+st.sidebar.image(
+    "/Users/alexmayo/Documents/my_projects/launchpad/launchpad.png", 
+    width=None,
+    use_container_width=True
+)
+
 # Stop rendering if no idea selected
 if st.session_state.selected_idea is None:
     st.stop()
 
+######################################################################################
+# Tabs
 ######################################################################################
 
 tab1, tab2 = st.tabs(["Financial Inputs", "Financial Projections"])
@@ -173,21 +168,6 @@ with tab2:
         with col9:
             st.metric("Y5 Revenue Run Rate", f"${yearly_revenue[-1]/1000000:.1f}M")
         
-        # Financial Projections Table
-        projections_df = pd.DataFrame({
-            'Year': years,
-            'Customers': [int(yearly_customers[i]) for i in range(5)],
-            'Revenue': [f"${yearly_revenue[i]/1000000:.1f}M" for i in range(5)],
-            'Gross Profit': [f"${(yearly_revenue[i] * gross_margin/100)/1000000:.1f}M" for i in range(5)]
-        })
-
-        st.write("### 5-Year Financial Projections")
-        st.dataframe(projections_df.transpose(), use_container_width=True)
-
-        # Create and display charts
-        import plotly.graph_objects as go
-        from plotly.subplots import make_subplots
-        
         # Revenue Growth Chart
         fig = make_subplots(rows=2, cols=1, subplot_titles=('Monthly Revenue', 'Customer Growth'))
         
@@ -203,6 +183,17 @@ with tab2:
         
         fig.update_layout(height=600, showlegend=True)
         st.plotly_chart(fig, use_container_width=True)
+        
+        # Financial Projections Table
+        projections_df = pd.DataFrame({
+            'Year': years,
+            'Customers': [int(yearly_customers[i]) for i in range(5)],
+            'Revenue': [f"${yearly_revenue[i]/1000000:.1f}M" for i in range(5)],
+            'Gross Profit': [f"${(yearly_revenue[i] * gross_margin/100)/1000000:.1f}M" for i in range(5)]
+        })
+        
+        st.write("### 5-Year Financial Projections")
+        st.dataframe(projections_df.transpose(), use_container_width=True)
         
         # Sensitivity Analysis
         st.write("### Revenue Sensitivity Analysis")
@@ -220,54 +211,3 @@ with tab2:
             ]
         
         st.dataframe(sensitivity_df, use_container_width=True)
-
-
-
-# add CLV calculator
-# add churn
-
-
-#     # Question 3
-#     st.write("What is your primary revenue goal?")
-#     q3 = st.radio(
-#         "",
-#         ["Growth & Market Share", "Immediate Profitability"],
-#         key="revenue_goal"
-#     )
-
-
-
-#     st.write("##### Configure Your Monetization Strategy")
-    
-#     # Question 4
-#     st.write("What is your expected customer lifetime value (CLV)?")
-#     clv = st.number_input(
-#         "Enter your expected CLV:",
-#         min_value=0.0,
-#         format="%.2f",
-#         key="customer_lifetime_value"
-#     )
-
-#     # Question 5
-#     st.write("What is your customer acquisition cost (CAC)?")
-#     cac = st.number_input(
-#         "Enter your expected CAC:",
-#         min_value=0.0,
-#         format="%.2f",
-#         key="customer_acquisition_cost"
-#     )
-
-#     # Recommendations based on inputs
-#     if st.button("Get Recommendations"):
-#         recommendations = f"""
-#         Based on your inputs:
-#         - Customer Lifetime Value (CLV): ${clv}
-#         - Customer Acquisition Cost (CAC): ${cac}
-#         - Selected Pricing Strategy: {pricing_strategy}
-
-#         Here are some recommendations:
-#         - If your CLV is significantly higher than your CAC, consider a subscription model to maximize revenue.
-#         - For a freemium model, ensure you have a clear path to convert free users to paid users.
-#         - Dynamic pricing can be effective if you have fluctuating demand; consider using data analytics to optimize pricing.
-#         """
-#         st.write(recommendations)
