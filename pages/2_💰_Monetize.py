@@ -16,6 +16,18 @@ st.set_page_config(
 
 load_css()
 
+st.logo(
+    "/Users/alexmayo/Documents/my_projects/launchpad/sunglasses.png",
+    size="large",
+    link="https://streamlit.io/gallery",
+)
+
+st.sidebar.image(
+    "/Users/alexmayo/Documents/my_projects/launchpad/launchpad.png", 
+    width=None,  # Remove width to auto-fill
+    use_container_width=True  # Makes image fill width of sidebar
+)
+
 # Initialize selected_idea as None if not exists
 if 'selected_idea' not in st.session_state:
     st.session_state.selected_idea = None
@@ -35,12 +47,6 @@ add_selectbox = st.selectbox(
    index=None,
    placeholder="Select an idea",
    key="selected_idea"
-)
-
-st.sidebar.image(
-    "/Users/alexmayo/Documents/my_projects/launchpad/launchpad.png", 
-    width=None,
-    use_container_width=True
 )
 
 # Stop rendering if no idea selected

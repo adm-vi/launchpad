@@ -11,6 +11,18 @@ st.set_page_config(
 
 load_css()
 
+st.logo(
+    "/Users/alexmayo/Documents/my_projects/launchpad/sunglasses.png",
+    size="large",
+    link="https://streamlit.io/gallery",
+)
+
+st.sidebar.image(
+    "/Users/alexmayo/Documents/my_projects/launchpad/launchpad.png", 
+    width=None,  # Remove width to auto-fill
+    use_container_width=True  # Makes image fill width of sidebar
+)
+
 st.markdown("""
     <div class="header-container">
         <h1 class="header-title">Ideas</h1>
@@ -75,7 +87,6 @@ def add_idea(name, description, status):
 
 # Display Ideas Table
 if not st.session_state.ideas.empty:
-    st.markdown("### Your Ideas")
     
     # Add filters
     col1, col2 = st.columns([2, 1])
