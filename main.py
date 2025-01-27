@@ -19,13 +19,13 @@ st.set_page_config(
 load_css()
 
 st.logo(
-    "/Users/alexmayo/Documents/my_projects/launchpad/sunglasses.png",
+    "images/sunglasses.png",
     size="large",
     link="https://streamlit.io/gallery",
 )
 
 st.sidebar.image(
-    "/Users/alexmayo/Documents/my_projects/launchpad/launchpad.png", 
+    "images/launchpad.png", 
     width=None,  # Remove width to auto-fill
     use_container_width=True  # Makes image fill width of sidebar
 )
