@@ -93,8 +93,8 @@ with col1:
     st.markdown("##### Temperature")
     st.caption(
         """**Control the creativity level of the AI:**  
-        - **Focused**: More deterministic and consistent  
-        - **Creative**: More varied and unexpected"""
+        - **Realistic**: More deterministic and consistent  
+        - **Unhinged**: More varied and unexpected"""
     )
     temperature = st.slider(
         label="Select a value:",
