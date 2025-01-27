@@ -51,14 +51,13 @@ st.markdown("""
     combining AI-driven insights with practical strategies to turn your ideas into
     sustainable, revenue-generating ventures.**
     
-    **Launchpad's AI can help you:**
+    **Launchpad AI features:**
             
-    - **Ideas** - Your ideas are safe here.
-    - **Ideate** - Need help refining your idea? Looking for new inspiration? We've got you covered.
-    - **Monetize** - Let our AI analyze various pricing strategies and select the best one for your idea
-    - **Benchmark** - Compare your idea to potential competition
-    - **Pitch** - Ideas on a page.
-    - **Feedback** - Proceed or pivot.
+    - **Idea Journal** - Your ideas are safe here
+    - **Financial Modeling** - Back-of-the-napkin financial projections
+    - **Benchmarking** - Compare your idea to the competition
+    - **Pitch Deck** - Ideas on a page
+    - **Feedback** - Proceed or pivot
     </div>
 """, unsafe_allow_html=True)
 

@@ -107,14 +107,21 @@ if not metrics or st.session_state.selected_idea is None:  # Check for None
 ######################################################################################
 
 st.markdown(f"""
-    <div class="gradient-card" style='display:flex; align-items:center;'>
-        <div style='flex:1'>
-            <h3 style='margin-left:20px; margin-bottom:0px'>{st.session_state.selected_idea}</h3>
-            <small style='color:#fff; margin-left:30px; font-family:monospace;'>Selected Project</small>
-        </div>
-        <div style='background:{"rgba(46, 125, 50, 0.2)" if metrics["viability_score"]>=0.7 else "rgba(245, 124, 0, 0.2)"}; padding:8px 15px; border-radius:15px; text-align:center; margin-right:20px'>
+    <div class="gradient-card" style='display:flex; justify-content:space-between; align-items:center;'>
+        <div style='background:{"rgba(46, 125, 50, 0.2)" if metrics["viability_score"]>=0.7 else "rgba(245, 124, 0, 0.2)"}; padding:8px 15px; border-radius:15px; display:flex; align-items:center; margin-right:20px'>
+            <small style='color:#fff; font-family:monospace; font-weight:bold; font-size: 1.8em; margin-right:10px'>Viability Score:</small>
             <div style='font-weight:bold; font-family:monospace; font-size: 1.8em; color:{"#fff"}'>{metrics['viability_score']:.2f}</div>
-            <small style='color:#fff; font-family:monospace; font-size: 1.0em'>Viability</small>
+        </div>
+        <div style='display:flex; flex-direction:column; gap:1px; padding:20px; text-align:right'>
+            <div>
+                <small style='color:#fff'>Score ≥ 0.80: Good Potential</small>
+            </div>
+            <div>
+                <small style='color:#fff'>0.80 > Score ≥ 0.50: Needs work</small>
+            </div>
+            <div>
+                <small style='color:#fff'>0.50 > Score: Pivot Idea</small>
+            </div>
         </div>
     </div>
 """, unsafe_allow_html=True)
@@ -320,7 +327,7 @@ st.markdown("""
 
 # Add the button
 if st.button("🪦 Pivot", type="secondary"):
-    st.switch_page("pages/1_📓_Ideas.py")
+    st.switch_page("pages/1_💡_Ideas.py")
 
 # Add the text below
 st.markdown("""

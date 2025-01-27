@@ -5,7 +5,7 @@ from utils import load_css
 
 st.set_page_config(
     page_title="Ideas",
-    page_icon="📝",
+    page_icon="💡",
     layout="wide"
 )
 
@@ -166,5 +166,5 @@ with st.expander("➕ Add New Idea", expanded=False):
             st.rerun()
 
 # Add button to move to ideate page
-if st.button("Start Ideating 💡 →", type="primary", use_container_width=True):
-    st.switch_page("pages/2_💡_Ideate.py") 
+if st.button("Let's Model 💰 →", type="primary", use_container_width=True):
+    st.switch_page("pages/2_💰_Financials.py") 
