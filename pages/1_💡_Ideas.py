@@ -1,35 +1,13 @@
 import streamlit as st
 import pandas as pd
 from datetime import datetime
-from utils import load_css
+from utils.page_config import init_page, setup_page_content
 
-st.set_page_config(
-    page_title="Ideas",
-    page_icon="💡",
-    layout="wide"
-)
+# Must be called first
+init_page('ideas')
 
-load_css()
-
-st.logo(
-    "images/sunglasses.png",
-    size="large",
-    link="https://streamlit.io/gallery",
-)
-
-st.sidebar.image(
-    "images/launchpad.png", 
-    width=None,  # Remove width to auto-fill
-    use_container_width=True  # Makes image fill width of sidebar
-)
-
-st.markdown("""
-    <div class="header-container">
-        <h1 class="header-title">Ideas</h1>
-        <p class="header-subtitle">Manage Your Innovation Pipeline</p>
-        <hr class="header-divider">
-    </div>
-""", unsafe_allow_html=True)
+# Then setup the rest of the page
+setup_page_content('ideas')
 
 # Initialize session state for ideas if not exists
 if 'ideas' not in st.session_state:
@@ -38,7 +16,7 @@ if 'ideas' not in st.session_state:
         {
             'name': "AI Customer Support Bot",
             'description': "An intelligent chatbot that handles customer queries 24/7, using natural language processing to understand and respond to customer needs. Features personalized responses based on customer history.",
-            'status': "In Progress",
+            'status': "Ideation",
             'created_date': "2024-01-20 09:30",
             'last_modified': "2024-01-25 14:15"
         },
@@ -95,7 +73,7 @@ if not st.session_state.ideas.empty:
     with col2:
         status_filter = st.multiselect(
             "Filter by Status",
-            options=["In Progress", "Ideation", "Validating", "Pivoted", "Abandoned", "Launched"],
+            options=["Ideation", "Validating", "Pivoted", "Abandoned", "Launched"],
             default=[]
         )
     
@@ -119,7 +97,7 @@ if not st.session_state.ideas.empty:
             ),
             "status": st.column_config.SelectboxColumn(
                 "Status",
-                options=["In Progress", "Ideation", "Validating", "Pivoted", "Abandoned", "Launched"],
+                options=["Ideation", "Validating", "Pivoted", "Abandoned", "Launched"],
                 width="small"
             ),
             "created_date": st.column_config.DatetimeColumn(
@@ -144,24 +122,16 @@ st.markdown("---")
 # New Idea Form in Expander
 with st.expander("➕ Add New Idea", expanded=False):
     with st.form("new_idea_form"):
-        col1, col2 = st.columns([2, 1])
-        with col1:
-            name = st.text_input("Idea Name", placeholder="Enter a catchy name for your idea")
-            description = st.text_area(
-                "Description",
-                placeholder="Describe your idea, its unique features, and potential market applications",
-                height=100
-            )
-        with col2:
-            status = st.selectbox(
-                "Status",
-                options=["In Progress", "Ideation", "Validating", "Pivoted", "Abandoned", "Launched"],
-                index=1
-            )
+        name = st.text_input("Idea Name", placeholder="Enter a catchy name for your idea")
+        description = st.text_area(
+            "Description",
+            placeholder="Describe your idea, its unique features, and potential market applications",
+            height=100
+        )
         
         submitted = st.form_submit_button("Add Idea", type="secondary", use_container_width=True)
         if submitted and name and description:
-            add_idea(name, description, status)
+            add_idea(name, description, "Ideation")  # Default status to "Ideation"
             st.success("✨ Idea added successfully!")
             st.rerun()
 

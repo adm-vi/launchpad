@@ -1,43 +1,20 @@
+import random
+
 import streamlit as st
 import pandas as pd
 import plotly.express as px
 import plotly.graph_objects as go
 from plotly.subplots import make_subplots
-from utils import load_css
-import random
+from utils.page_config import init_page, setup_page_content
+from utils.utils import load_css
 
-######################################################################################
-# page configurations
-######################################################################################
+# Must be called first
+init_page('benchmark')
 
-st.set_page_config(
-    page_title="Benchmark",
-    page_icon="🎯",
-    layout="wide",
-)
+# Then setup the rest of the page
+setup_page_content('benchmark')
 
-load_css()
 
-st.logo(
-    "images/sunglasses.png",
-    size="large",
-    link="https://streamlit.io/gallery",
-)
-
-st.sidebar.image(
-    "images/launchpad.png", 
-    width=None,  # Remove width to auto-fill
-    use_container_width=True  # Makes image fill width of sidebar
-)
-
-st.markdown("""
-    <div class="header-container">
-        <h1 class="header-title">Benchmarks</h1>
-        <p class="header-subtitle">HOW DO WE STACK UP?</p>
-        <hr class="header-divider">
-    </div>
-""", unsafe_allow_html=True
-)
 
 # Initialize selected_idea as None if not exists
 if 'selected_idea' not in st.session_state:

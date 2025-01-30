@@ -1,49 +1,28 @@
+import random
+from datetime import datetime, timedelta
+
 import streamlit as st
 import pandas as pd
+import plotly.express as px
 import plotly.graph_objects as go
 from plotly.subplots import make_subplots
-from utils import load_css
+from utils.page_config import init_page, setup_page_content
+from utils.utils import load_css
 
-######################################################################################
-# Page configurations
-######################################################################################
+# Must be called first
+init_page('financials')
 
-st.set_page_config(
-    page_title="Monetize",
-    page_icon="💰",
-    layout="wide",
-)
-
-load_css()
-
-st.logo(
-    "images/sunglasses.png",
-    size="large",
-    link="https://streamlit.io/gallery",
-)
-
-st.sidebar.image(
-    "images/launchpad.png", 
-    width=None,  # Remove width to auto-fill
-    use_container_width=True  # Makes image fill width of sidebar
-)
+# Then setup the rest of the page
+setup_page_content('financials')
 
 # Initialize selected_idea as None if not exists
 if 'selected_idea' not in st.session_state:
     st.session_state.selected_idea = None
 
-st.markdown("""
-    <div class="header-container">
-        <h1 class="header-title">Monetization</h1>
-        <p class="header-subtitle">VC STYLE FINANCIAL MODELING</p>
-        <hr class="header-divider">
-    </div>
-""", unsafe_allow_html=True)
-
 # Add selectbox with None as initial state
 add_selectbox = st.selectbox(
    "Which idea are you working on?",     
-   options=["AI for dogs", "startups for toddlers"],
+   options=["Acme Corp.", "Vandelay Industries"],
    index=None,
    placeholder="Select an idea",
    key="selected_idea"
@@ -54,166 +33,166 @@ if st.session_state.selected_idea is None:
     st.stop()
 
 ######################################################################################
-# Tabs
-######################################################################################
 
-tab1, tab2 = st.tabs(["Financial Inputs", "Financial Projections"])
+# Get selected idea from sidebar
+selected_idea = st.session_state.selected_idea
 
-with tab1:
-    st.markdown("""
-        <div style="font-family: 'Geist', sans-serif;">
-        <h3>Revenue Model Analysis</h3>
-        </div>
-    """, unsafe_allow_html=True)
+# Create tabs
+tab0, tab1, tab2, tab3, tab4 = st.tabs(["Inputs", "Customers", "Revenues", "Expenses", "Summary"])
+
+# Inputs
+with tab0:
+    st.markdown("### Revenue Assumptions")
+
+    col1, space, col2 = st.columns([1, 0.2, 1])
+
+    with col1:
+        st.markdown("##### Year 1")
+        col1a, col1b, space = st.columns([4, 3, 2]); col1a.write("Price/Month ($):"); col1b.number_input(label="price", label_visibility="collapsed", value=10, key="product_price")
+        col1a, col1b, space = st.columns([4, 3, 2]); col1a.write("MoM Growth Rate (%):"); col1b.number_input(label="growth", label_visibility="collapsed", value=25, key="product_growth")
+        col1a, col1b, space = st.columns([4, 3, 2]); col1a.write("MoM Churn Rate (%):"); col1b.number_input(label="churn", label_visibility="collapsed", value=10, key="product_churn")
+        col1a, col1b, space = st.columns([4, 3, 2]); col1a.write("Starting Customers (#):"); col1b.number_input(label="customers", label_visibility="collapsed", value=10, key="product_customers")
+
+    with col2:
+        st.markdown("##### Year 2")
+        col2a, col2b, space = st.columns([4, 3, 2]); col2a.write("Price/Month ($):"); col2b.number_input(label="price", label_visibility="collapsed", value=12, key="product_a_price_2")
+        col2a, col2b, space = st.columns([4, 3, 2]); col2a.write("MoM Growth Rate (%):"); col2b.number_input(label="growth", label_visibility="collapsed", value=15, key="product_a_growth_2")
+        col2a, col2b, space = st.columns([4, 3, 2]); col2a.write("MoM Churn Rate (%):"); col2b.number_input(label="churn", label_visibility="collapsed", value=8, key="product_a_churn_2")
     
-    with st.form("monetization_analysis"):
-        col1, col2 = st.columns(2)
+    st.divider()
+    st.markdown("### Expense Assumptions")
+
+# Financials
+with tab1:
+    st.markdown("### Financials")
+    price_1 = st.session_state.product_price
+    growth_1 = st.session_state.product_growth / 100
+    churn_1 = st.session_state.product_churn / 100
+    initial_customers = st.session_state.product_customers
+    price_2 = st.session_state.product_a_price_2
+    growth_2 = st.session_state.product_a_growth_2 / 100
+    churn_2 = st.session_state.product_a_churn_2 / 100
+
+    # Generate month labels (next 24 months)
+    start_date = datetime.now()
+    # Using calendar months instead of fixed 30-day intervals to avoid skipping February
+    months = []
+    for i in range(12):
+        # Add months one at a time to properly handle month transitions
+        next_date = start_date.replace(day=1) + pd.DateOffset(months=i)
+        months.append(next_date.strftime('%b-%y'))
+
+    # Initialize lists for calculations
+    starting_customers = []
+    new_customers = []
+    churned_customers = []
+    ending_customers = []
+    monthly_revenue = []
+
+    # Calculate customer metrics for each month
+    current_customers = initial_customers
+
+    for i in range(12):
+        # Starting customers (same as previous month's ending customers)
+        if i == 0:
+            starting_customers.append(initial_customers)
+        else:
+            starting_customers.append(ending_customers[i-1])
         
-        with col1:
-            st.write("**Market & Competition**")
-            market_size = st.number_input(
-                "Total Addressable Market (TAM) in $M",
-                min_value=0.0,
-                format="%.1f",
-                value=100.0
-            )
-            
-            competitors = st.number_input(
-                "Number of Direct Competitors",
-                min_value=0,
-                step=1,
-                value=5
-            )
-            
-            market_growth = st.slider(
-                "Market Growth Rate (% YoY)",
-                min_value=0,
-                max_value=200,
-                value=20
-            )
-
-        with col2:
-            st.write("**Unit Economics**")
-            cac = st.number_input(
-                "Est. Customer Acquisition Cost ($)",
-                min_value=0.0,
-                format="%.2f",
-                value=100.00
-            )
-            
-            clv = st.number_input(
-                "Est. Customer Lifetime Value ($)",
-                min_value=0.0,
-                format="%.2f",
-                value=500.00
-            )
-            
-            gross_margin = st.slider(
-                "Expected Gross Margin (%)",
-                min_value=0,
-                max_value=100,
-                value=70
-            )
-
-        st.write("**Revenue Model**")
-        pricing_model = st.radio(
-            "Primary Revenue Model",
-            ["SaaS/Subscription", "Transactional", "Marketplace/Commission", "Freemium", "Enterprise Licensing"]
-        )
+        # New customers (based on previous month's ending customers)
+        new_customer_count = round(current_customers * growth_1)
+        new_customers.append(new_customer_count)
         
-        if pricing_model == "SaaS/Subscription":
-            col5, col6 = st.columns(2)
-            with col5:
-                price_tier1 = st.number_input("Basic Tier Monthly Price ($)", min_value=0.0, format="%.2f", value=10.00)
-                conversion_rate1 = st.slider("Basic Tier Conversion (%)", 0, 100, 5)
-            with col6:
-                price_tier2 = st.number_input("Premium Tier Monthly Price ($)", min_value=0.0, format="%.2f", value=50.00)
-                conversion_rate2 = st.slider("Premium Tier Conversion (%)", 0, 100, 2)
+        # Churned customers
+        churned_customer_count = round(current_customers * churn_1)
+        churned_customers.append(-churned_customer_count)
+        
+        # Ending customers
+        current_customers = current_customers + new_customer_count - churned_customer_count
+        ending_customers.append(current_customers)
 
-        submitted = st.form_submit_button("Generate Financial Projections")
+        # Monthly revenue
+        monthly_revenue.append(current_customers * price_1)
 
+    # Create customer growth dataframe
+    customer_data = {
+        'Metric': [
+            'Starting Customers',
+            'New Customers',
+            'Churned Customers',
+            'Ending Customers',
+            'Monthly Revenue'
+        ]
+    }
+
+    # Add data for each month
+    for i, month in enumerate(months):
+        customer_data[month] = [
+            f"{starting_customers[i]:,.0f}",
+            f"{new_customers[i]:,.0f}",
+            f"{churned_customers[i]:,.0f}",
+            f"{ending_customers[i]:,.0f}",
+            f"${monthly_revenue[i]:,.0f}"
+        ]
+
+    customer_df = pd.DataFrame(customer_data)
+
+    # Display customer growth overview
+    st.dataframe(customer_df, use_container_width=True)
+
+# Revenues
 with tab2:
-    if submitted:
-        st.success("Analysis complete! Generating projections...")
-        
-        # Create 5-year projections
-        years = list(range(1, 6))
-        
-        # Basic growth assumptions
-        monthly_growth_rate = 0.10  # 10% monthly growth
-        churn_rate = 0.02  # 2% monthly churn
-        
-        # Calculate monthly customers and revenue
-        months = list(range(1, 61))  # 5 years = 60 months
-        monthly_customers = []
-        monthly_revenue = []
-        
-        customers = 100  # Starting with 100 customers
-        for month in months:
-            customers = customers * (1 + monthly_growth_rate - churn_rate)
-            basic_customers = customers * (conversion_rate1/100)
-            premium_customers = customers * (conversion_rate2/100)
-            monthly_rev = (basic_customers * price_tier1) + (premium_customers * price_tier2)
-            
-            monthly_customers.append(customers)
-            monthly_revenue.append(monthly_rev)
-        
-        # Create yearly summaries
-        yearly_customers = [monthly_customers[i] for i in range(11, 60, 12)]
-        yearly_revenue = [sum(monthly_revenue[i-11:i+1]) for i in range(11, 60, 12)]
-        
-        # Display KPI Dashboard
-        st.write("### Key Performance Indicators")
-        
-        col7, col8, col9 = st.columns(3)
-        
-        with col7:
-            st.metric("LTV/CAC Ratio", f"{(clv/cac):.1f}x")
-        with col8:
-            st.metric("Gross Margin", f"{gross_margin}%")
-        with col9:
-            st.metric("Y5 Revenue Run Rate", f"${yearly_revenue[-1]/1000000:.1f}M")
-        
-        # Revenue Growth Chart
-        fig = make_subplots(rows=2, cols=1, subplot_titles=('Monthly Revenue', 'Customer Growth'))
-        
-        fig.add_trace(
-            go.Scatter(x=months, y=monthly_revenue, name="Monthly Revenue"),
-            row=1, col=1
-        )
-        
-        fig.add_trace(
-            go.Scatter(x=months, y=monthly_customers, name="Total Customers"),
-            row=2, col=1
-        )
-        
-        fig.update_layout(height=600, showlegend=True)
-        st.plotly_chart(fig, use_container_width=True)
-        
-        # Financial Projections Table
-        projections_df = pd.DataFrame({
-            'Year': years,
-            'Customers': [int(yearly_customers[i]) for i in range(5)],
-            'Revenue': [f"${yearly_revenue[i]/1000000:.1f}M" for i in range(5)],
-            'Gross Profit': [f"${(yearly_revenue[i] * gross_margin/100)/1000000:.1f}M" for i in range(5)]
-        })
-        
-        st.write("### 5-Year Financial Projections")
-        st.dataframe(projections_df.transpose(), use_container_width=True)
-        
-        # Sensitivity Analysis
-        st.write("### Revenue Sensitivity Analysis")
-        sensitivity_df = pd.DataFrame(
-            index=['Low Growth (-50%)', 'Base Case', 'High Growth (+50%)'],
-            columns=['Year 1', 'Year 3', 'Year 5']
-        )
-        
-        for i, growth_mult in enumerate([0.5, 1.0, 1.5]):
-            modified_revenue = [r * growth_mult for r in yearly_revenue]
-            sensitivity_df.iloc[i] = [
-                f"${modified_revenue[0]/1000000:.1f}M",
-                f"${modified_revenue[2]/1000000:.1f}M",
-                f"${modified_revenue[4]/1000000:.1f}M"
-            ]
-        
-        st.dataframe(sensitivity_df, use_container_width=True)
+    # Revenues
+    avg_revenue = st.number_input("Average Monthly Revenue per Customer ($)", value=50)
+
+    mrr_data = {
+        'Metric': [
+            'Starting MRR',
+            'New MRR', 
+            'Churned MRR',
+            'Ending MRR'
+        ]
+    }
+
+    # Add data for each month
+    for i, month in enumerate(months):
+        mrr_data[month] = [
+            f"${starting_customers[i] * avg_revenue:,.0f}",
+            f"${new_customers[i] * avg_revenue:,.0f}", 
+            f"${churned_customers[i] * avg_revenue:,.0f}",
+            f"${ending_customers[i] * avg_revenue:,.0f}"
+        ]
+
+    mrr_df = pd.DataFrame(mrr_data)
+
+    st.markdown("### Monthly Recurring Revenue")
+    st.dataframe(mrr_df, use_container_width=True)
+
+# Expenses
+with tab3:
+    st.markdown("### Expenses")
+    st.info("Coming soon! This tab will contain cost modeling features.")
+
+# Summary
+with tab4:
+    st.markdown("### Summary")
+
+    # Display KPI Dashboard
+    st.write("### Key Performance Indicators")
+    
+    col7, col8, col9 = st.columns(3)
+    
+    with col7:
+        st.metric("LTV/CAC Ratio", "4x")
+    with col8:
+        st.metric("Gross Margin", "60%")
+    with col9:
+        st.metric("Runway", "12 months")
+    
+    # Revenue Growth Chart
+    fig = make_subplots(rows=2, cols=1, subplot_titles=('Monthly Revenue', 'Customer Growth'))
+    
+    fig.add_trace(
+        go.Scatter(x=months, y=monthly_revenue, name="Monthly Revenue"),
+        row=1, col=1
+    )

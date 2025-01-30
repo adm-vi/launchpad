@@ -1,39 +1,12 @@
 import streamlit as st
-from utils import load_css
+from utils.utils import load_css
+from utils.page_config import init_page, setup_page_content
 
+# Must be called first
+init_page('pitch')
 
-######################################################################################
-# page configurations
-######################################################################################
-
-st.set_page_config(
-    page_title="The Pitch",
-    page_icon="📊",
-    layout="wide",
-)
-
-load_css()
-
-st.logo(
-    "images/sunglasses.png",
-    size="large",
-    link="https://streamlit.io/gallery",
-)
-
-st.sidebar.image(
-    "images/launchpad.png", 
-    width=None,  # Remove width to auto-fill
-    use_container_width=True  # Makes image fill width of sidebar
-)
-
-st.markdown("""
-    <div class="header-container">
-        <h1 class="header-title">Pitch Deck</h1>
-        <p class="header-subtitle">How to socialize your idea</p>
-        <hr class="header-divider">
-    </div>
-""", unsafe_allow_html=True
-)
+# Then setup the rest of the page
+setup_page_content('pitch')
 
 # Initialize selected_idea as None if not exists
 if 'selected_idea' not in st.session_state:

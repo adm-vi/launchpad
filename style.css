@@ -245,3 +245,53 @@ hr.header-divider {
     background: #f8f8f8;
     font-family: 'Geist', sans-serif;
 }
+
+/* General text styles */
+.big-font {
+    font-size: 20px !important;
+    font-weight: bold;
+}
+
+/* Financial page styles */
+.financial-metric {
+    color: #0068c9;
+    font-weight: 600;
+}
+
+.metric-container {
+    background-color: #f0f2f6;
+    padding: 10px;
+    border-radius: 5px;
+}
+
+/* Pitch page styles */
+.pitch-header {
+    text-align: center;
+    color: #262730;
+    margin-bottom: 1rem;
+}
+
+/* Metric card styles */
+.metric-card {
+    background-color: white;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    margin: 10px 0;
+    font-family: 'Courier New', Courier, monospace;
+}
+
+.metric-value {
+    font-size: 24px;
+    font-weight: bold;
+}
+
+.metric-delta {
+    font-family: 'Geist Mono';
+    font-size: 14px;
+    margin-top: 5px;
+}
+
+.gradient-card {
+    box-shadow: 0 4px 8px rgba(0,0,0,0.2), 0 6px 20px rgba(0,0,0,0.1);
+}

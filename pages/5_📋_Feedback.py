@@ -1,11 +1,20 @@
+import random
+
 import streamlit as st
 import pandas as pd
-import random
-from utils import load_css
+from utils.page_config import init_page, setup_page_content
+
+from utils.utils import load_css
 
 ######################################################################################
 # Initialize session state
 ######################################################################################
+
+# Must be called first
+init_page('feedback')
+
+# Then setup the rest of the page
+setup_page_content('feedback')
 
 # Initialize idea metrics if not exists
 if 'idea_metrics' not in st.session_state:
@@ -48,30 +57,6 @@ if 'idea_metrics' not in st.session_state:
 if 'selected_idea' not in st.session_state:
     st.session_state.selected_idea = None
 
-######################################################################################
-# Page Configuration
-######################################################################################
-
-st.set_page_config(
-    page_title="Investment Committee",
-    page_icon="📋",
-    layout="wide",
-)
-
-load_css()
-
-######################################################################################
-# Header and Branding
-######################################################################################
-
-st.markdown("""
-    <div class="header-container">
-        <h1 class="header-title">Investment Committee</h1>
-        <p class="header-subtitle">FEEDBACK FROM LAUNCHPAD</p>
-        <hr class="header-divider">
-    </div>
-""", unsafe_allow_html=True)
-
 # Add selectbox with None as initial state
 add_selectbox = st.selectbox(
    "Which idea are you working on?",     
@@ -79,18 +64,6 @@ add_selectbox = st.selectbox(
    index=None,  # This makes it start empty
    placeholder="Select an idea",  # This shows as placeholder text
    key="selected_idea"
-)
-
-st.logo(
-    "images/sunglasses.png",
-    size="large",
-    link="https://streamlit.io/gallery",
-)
-
-st.sidebar.image(
-    "images/launchpad.png", 
-    width=None,
-    use_container_width=True
 )
 
 ######################################################################################
@@ -181,27 +154,6 @@ st.markdown(f"""
 # Investment Readiness Assessment
 ######################################################################################
 
-st.markdown("""
-<style>
-.metric-card {
-    background-color: white;
-    padding: 20px;
-    border-radius: 8px;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-    margin: 10px 0;
-    font-family: 'Courier New', Courier, monospace;
-}
-.metric-value {
-    font-size: 24px;
-    font-weight: bold;
-}
-.metric-delta {
-    font-size: 14px;
-    margin-top: 5px;
-}
-</style>
-""", unsafe_allow_html=True)
-
 # Calculate metrics
 clv_cac = 3.5
 growth_rate = 15
@@ -218,7 +170,7 @@ col1, col2, col3 = st.columns(3)
 with col1:
     st.markdown(f"""
     <div class="metric-card">
-        <div>CLV/CAC Ratio</div>
+        <div><b>CLV/CAC Ratio</b></div>
         <div class="metric-value">{clv_cac:.1f}x</div>
         <div class="metric-delta" style="color: {'green' if clv_cac >= 3 else 'red'}">
             {"Good" if clv_cac >= 3 else "Needs Improvement"}
