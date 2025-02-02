@@ -52,6 +52,110 @@ hr.header-divider {
     border-top: 3px solid #ccc;
 }
 
+/* Sophisticated header styles */
+.sophisticated-header {
+    padding: 2rem 3rem 3rem;
+    position: relative;
+    overflow: hidden;
+    background: linear-gradient(to bottom, #ffffff, #f8f9fa);
+    border: 1px solid rgba(0, 0, 0, 0.1);
+    border-radius: 12px;
+    box-shadow: 
+        0 4px 6px -1px rgba(0, 0, 0, 0.1),
+        0 2px 4px -1px rgba(0, 0, 0, 0.06),
+        inset 0 2px 4px rgba(255, 255, 255, 0.8);
+    margin: 1rem 0 2rem;
+}
+
+.sophisticated-header::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 1px;
+    background: linear-gradient(
+        90deg,
+        transparent,
+        rgba(255, 255, 255, 0.8),
+        transparent
+    );
+}
+
+.header-content {
+    position: relative;
+    z-index: 2;
+    max-width: 800px;
+    margin: 0;
+    text-align: left;
+}
+
+.header-title {
+    font-family: 'Funnel Display', sans-serif;
+    font-size: 3.5rem;
+    font-weight: 800;
+    letter-spacing: -1.5px;
+    margin: 0;
+    background: linear-gradient(
+        135deg,
+        #a13d7a 0%,
+        #c66954 25%,
+        #9e8339 50%,
+        #3d7349 75%,
+        #2a6075 100%
+    );
+    background-clip: text;
+    -webkit-background-clip: text;
+    color: transparent;
+    -webkit-text-fill-color: transparent;
+    background-size: 200% 200%;
+    animation: gradient-shift 8s ease infinite;
+}
+
+.header-subtitle {
+    font-family: 'Geist', sans-serif;
+    font-size: 1.1rem;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    color: #666;
+    margin: 0.5rem 0;
+}
+
+.header-description {
+    font-family: 'Geist', sans-serif;
+    font-size: 1rem;
+    line-height: 1.6;
+    color: #555;
+    margin: 1rem 0;
+    max-width: 600px;
+}
+
+.header-divider {
+    margin: 2rem 0 1rem;
+    border: none;
+    height: 3px;
+    background: linear-gradient(
+        90deg,
+        #a13d7a 0%,
+        #c66954 25%,
+        #9e8339 50%,
+        #3d7349 75%,
+        #2a6075 100%
+    );
+}
+
+@keyframes gradient-shift {
+    0% {
+        background-position: 0% 50%;
+    }
+    50% {
+        background-position: 100% 50%;
+    }
+    100% {
+        background-position: 0% 50%;
+    }
+}
+
 /* Sidebar styles */
 [data-testid="stSidebar"] {
     background: linear-gradient(
@@ -271,25 +375,74 @@ hr.header-divider {
     margin-bottom: 1rem;
 }
 
-/* Metric card styles */
+/* Feature card styles */
+.feature-card {
+    background: white;
+    border: 1px solid #eaeaea;
+    border-radius: 0;
+    padding: 1.25rem;
+    transition: all 0.2s ease;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+    height: auto !important;
+    min-height: 130px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    margin: 0.25rem 0;
+}
+
+.feature-card:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+    border-color: #ddd;
+}
+
+.feature-card > div:first-child {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1rem;
+}
+
+.feature-card > div:first-child span {
+    font-size: 1.5em;
+    opacity: 0.8;
+}
+
+.feature-description {
+    color: #666;
+    font-size: 0.95em;
+    line-height: 1.4;
+}
+
+/* Metric card styles - for feedback page */
 .metric-card {
-    background-color: white;
-    padding: 20px;
+    background-color: #f8f9fa;
+    padding: 1rem 1.2rem;
     border-radius: 8px;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.06);
     margin: 10px 0;
-    font-family: 'Courier New', Courier, monospace;
+    border: 1px solid #e9ecef;
+}
+
+.metric-card > div:first-child {
+    font-size: 0.9em;
+    color: #495057;
+    font-weight: 600;
+    margin-bottom: 0.5rem;
 }
 
 .metric-value {
-    font-size: 24px;
+    font-size: 1.5em;
     font-weight: bold;
+    color: #212529;
+    margin: 0.3rem 0;
 }
 
 .metric-delta {
     font-family: 'Geist Mono';
-    font-size: 14px;
-    margin-top: 5px;
+    font-size: 0.85em;
+    margin-top: 0.5rem;
 }
 
 .gradient-card {
