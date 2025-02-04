@@ -18,20 +18,20 @@ setup_page_content('main')
 st.markdown("""
     <div style="
         width: 100%;
-        background: linear-gradient(to bottom, #ffffff, #f8f9fa);
+        background: linear-gradient(to bottom, #ffffff, #e5e9ef);
         border: 1px solid rgba(0, 0, 0, 0.1);
-        padding: 1rem;
-        margin: 0.5rem 0;
+        padding: 0.75rem;
+        margin: -0.5rem 0 0.5rem 0;
     ">
         <div style="
             font-family: 'Geist', sans-serif;
             color: #555;
-            max-width: 800px;
+            max-width: 700px;
             margin: 0;
         ">
-            <p style="font-size: 1.1rem; line-height: 1.6; margin: 0; text-align: left;">
+            <p style="font-size: 1rem; line-height: 1.4; margin: 0; text-align: left;">
                 Forget Y-Combinator, forget about co-founders, and forget about years-long product discovery.<br><br>
-                Launchpad is your ultimate business ideation platform, combining AI-driven insights with practical strategies to turn your ideas into sustainable, revenue-generating ventures.
+                <span style="font-size: 0.9rem;">Launchpad is your ultimate business ideation platform, combining AI-driven insights with practical strategies to turn your ideas into sustainable, revenue-generating ventures.</span>
             </p>
         </div>
     </div>
@@ -44,7 +44,7 @@ st.markdown("""
 # Define features
 features = [
     {"title": "Ideation", "icon": "💡", "description": "AI-powered whiteboard"},
-    {"title": "Idea Journal", "icon": "📓", "description": "AI-powered whiteboard"},
+    {"title": "Idea Journal", "icon": "📓", "description": "Your ideas in one place"},
     {"title": "Financial Projections", "icon": "💰", "description": "Back-of-the-napkin financial projections"},
     {"title": "Benchmarks", "icon": "🎯", "description": "Compare your idea to the competition"},
     {"title": "Pitch Deck", "icon": "📊", "description": "Your idea on a few slides"},

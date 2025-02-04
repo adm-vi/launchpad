@@ -1,12 +1,12 @@
 PAGES = {
     'main': {
-        'title': 'Welcome to Launchpad',
-        'subtitle': 'AI-Powered Product Acceleration',
+        'title': 'WELCOME TO LAUNCHPAD',
+        'subtitle': 'AI-POWERED PRODUCT ACCELERATION',
         'icon': '👋'
     },
     'ideas': {
         'title': 'Ideas',
-        'subtitle': 'Manage Your Innovation Pipeline',
+        'subtitle': 'MANAGE YOUR INNOVATION PIPELINE',
         'icon': '💡'
     },
     'financials': {
@@ -21,8 +21,13 @@ PAGES = {
     },
     'pitch': {
         'title': 'Pitch Deck',
-        'subtitle': 'How to socialize your idea',
+        'subtitle': 'HOW TO SOCIALIZE YOUR IDEA',
         'icon': '📊'
+    },
+    'canvas': {
+        'title': 'Business Model Canvas',
+        'subtitle': 'VISUALIZE & COMMUNICATE YOUR BUSINESS MODEL',
+        'icon': '🖼️'
     },
     'feedback': {
         'title': 'Investment Committee',
