@@ -1,5 +1,4 @@
 import random
-
 import streamlit as st
 import pandas as pd
 from utils.page_config import init_page, setup_page_content
@@ -87,10 +86,10 @@ st.markdown(f"""
         </div>
         <div style='display:flex; flex-direction:column; gap:1px; padding:20px; text-align:right'>
             <div>
-                <small style='color:#fff'>Score ≥ 0.80: Good Potential</small>
+                <small style='color:#fff'>Score ≥ 0.70: Good Potential</small>
             </div>
             <div>
-                <small style='color:#fff'>0.80 > Score ≥ 0.50: Needs work</small>
+                <small style='color:#fff'>0.70 > Score ≥ 0.50: Needs work</small>
             </div>
             <div>
                 <small style='color:#fff'>0.50 > Score: Pivot Idea</small>

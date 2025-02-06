@@ -14,55 +14,38 @@ if 'ideas' not in st.session_state:
     # Create example ideas
     example_ideas = [
         {
-            'name': "AI Customer Support Bot",
+            'idea name': "AI Customer Support Bot",
             'details': "An intelligent chatbot that handles customer queries 24/7, using natural language processing to understand and respond to customer needs. Features personalized responses based on customer history.",
-            'category': "💬 Customer Support",
+            'type': "🤖 AI",
+            'viability score': "0.57",
+            'status': "Ideation",
             'customers': "0",
             'revenue': "$0",
-            'status': "Ideation",
             'created_date': "2024-01-20 09:30",
             'last_modified': "2024-01-25 14:15"
         },
         {
-            'name': "Smart Product Packaging",
-            'details': "Eco-friendly packaging system with QR codes that link to product information, usage tutorials, and sustainability metrics. Includes augmented reality features for interactive unboxing experience.",
-            'category': "🔍 Marketing",
-            'customers': "0",
-            'revenue': "$0",
-            'status': "Ideation",
-            'created_date': "2024-01-15 11:20",
-            'last_modified': "2024-01-15 11:20"
-        },
-        {
-            'name': "Virtual Try-Before-Buy",
+            'idea name': "Virtual Try-Before-Buy",
             'details': "AR-powered platform allowing customers to virtually test products before purchase. Includes size recommendations, style matching, and real-time visualization.",
-            'category': "🔍 Marketing",
+            'type': "🔍 MarTech",
+            'viability score': "0.46",
+            'status': "Validating",
             'customers': "0",
             'revenue': "$0",
-            'status': "Validating",
             'created_date': "2024-01-10 15:45",
             'last_modified': "2024-01-22 16:30"
         },
         {
-            'name': "Gamified User Rewards",
+            'idea name': "Gamified User Rewards",
             'details': "Loyalty program that turns product interactions into a game. Users earn points, badges, and rewards for completing tasks, writing reviews, and referring friends.",
-            'category': "🔍 Marketing",
-            'customers': "0",
-            'revenue': "$0",
+            'type': "🤖 AI",
+            'viability score': "0.71",
             'status': "Launched",
+            'customers': "46",
+            'revenue': "$1,300",
             'created_date': "2023-12-01 10:00",
             'last_modified': "2024-01-20 09:45"
         },
-        {
-            'name': "Market Segmentation Tool",
-            'details': "Data-driven tool for identifying and prioritizing target audiences. Analyzes customer behavior, demographics, and market trends to suggest optimal market segments.",
-            'category': "🔍 Marketing",
-            'customers': "0",
-            'revenue': "$0",
-            'status': "Pivoted",
-            'created_date': "2023-11-15 13:20",
-            'last_modified': "2024-01-18 11:30"
-        }
     ]
     st.session_state.ideas = pd.DataFrame(example_ideas)
 
@@ -70,12 +53,13 @@ if 'ideas' not in st.session_state:
 def add_idea(name, details, category, status):
     now = datetime.now().strftime("%Y-%m-%d %H:%M")
     new_idea = pd.DataFrame([{
-        'name': name,
+        'idea name': name,
         'details': details,
-        'category': category,
+        'type': category,
+        'viability score': "0",
+        'status': status,
         'customers': "0",
         'revenue': "$0",
-        'status': status,
         'created_date': now,
         'last_modified': now
     }])
@@ -107,51 +91,53 @@ if not st.session_state.ideas.empty:
     st.dataframe(
         df,
         column_config={
-            "name": st.column_config.TextColumn(
-                "Product Name",
+            "idea name": st.column_config.TextColumn(
+                "Idea Name",
                 pinned=True,
                 width="medium",
-                help="Name of the product"
+                help="Name of the idea"
             ),
             "details": st.column_config.TextColumn(
                 "Details",
                 width="medium",
                 help="Description of the idea"
             ),
-            "category": st.column_config.SelectboxColumn(
-            "App Category",
-            help="Category/market", 
-            width="medium",
-            options=[
-                "📊 SaaS",
-                "📈 Ecommerce", 
-                "🤖 AI",
-                "🔍 Marketing",
-                "💬 Customer Support",
-                "🔄 Operations",
-                "🛠️ Product Development",
-                "💰 Finance",
-                "👥 Human Resources",
-                "🏠 Real Estate",
-            ],
-            required=True,
-            ),
-            "customers": st.column_config.ProgressColumn(
-                "Customers",
-                format="%d",
+            "type": st.column_config.SelectboxColumn(
+                "Type",
+                help="Category/market", 
                 width="small",
-                help="Number of customers"
+                options=[
+                    "📊 SaaS",
+                    "📈 eCommerce", 
+                    "🤖 AI",
+                    "🔍 MarTech",
+                    "💰 FinTech",
+                    "🏠 PropTech",
+                ],
+                required=True,
             ),
-            "revenue": st.column_config.ProgressColumn(
-                "Revenue",
-                format="$%d",
+            "viability score": st.column_config.NumberColumn(
+                "Viability Score",
+                format="%.2f",
                 width="small",
-                help="Revenue generated"
+                help="Viability score"
             ),
             "status": st.column_config.SelectboxColumn(
                 "Status",
                 options=["Ideation", "Validating", "Pivoted", "Abandoned", "Launched"],
                 width="small"
+            ),
+            "customers": st.column_config.NumberColumn(
+                "Customers",
+                format="%d",
+                width="small",
+                help="Number of customers"
+            ),
+            "revenue": st.column_config.NumberColumn(
+                "Revenue",
+                format="$%d",
+                width="small",
+                help="Revenue generated"
             ),
             "created_date": st.column_config.DatetimeColumn(
                 "Created",
@@ -190,25 +176,21 @@ with st.expander("➕ Add New Idea", expanded=False):
             placeholder="Describe your idea, its unique features, and potential market applications",
             height=100
         )
-        category = st.selectbox(
-            "Category",
+        type = st.selectbox(
+            "Type",
             options=[
                 "📊 SaaS",
-                "📈 Ecommerce", 
+                "📈 eCommerce", 
                 "🤖 AI",
-                "🔍 Marketing",
-                "💬 Customer Support",
-                "🔄 Operations",
-                "🛠️ Product Development",
-                "💰 Finance",
-                "👥 Human Resources",
-                "🏠 Real Estate",
+                "🔍 MarTech",
+                "💰 FinTech",
+                "🏠 PropTech",
             ]
         )
         
         submitted = st.form_submit_button("Add Idea", type="secondary", use_container_width=True)
         if submitted and name and description:
-            add_idea(name, description, category, "Ideation")
+            add_idea(name, description, type, "Ideation")
             st.session_state.show_success = True
             st.rerun()
 

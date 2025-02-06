@@ -1,7 +1,7 @@
 PAGES = {
     'main': {
-        'title': 'WELCOME TO LAUNCHPAD',
-        'subtitle': 'AI-POWERED PRODUCT ACCELERATION',
+        'title': 'Welcome to Launchpad',
+        'subtitle': 'AI-POWERED PRODUCT ACCELERATION FOR SOLOPRENEURS',
         'icon': '👋'
     },
     'ideas': {
