@@ -8,10 +8,8 @@ from utils.page_config import init_page, setup_page_content
 # Must be called first
 init_page('main')
 
-# Then setup the rest of the page
-col1, col2, col3 = st.columns([1,3,1])
-with col2:
-    setup_page_content('main')
+# Setup the page content
+setup_page_content('main')
 
 ######################################################################################
 # Header
@@ -20,8 +18,7 @@ with col2:
 st.markdown("""
     <div style="
         width: 100%;
-        max-width: 800px;
-        margin: -0.5rem auto 0.5rem auto;
+        margin: -0.5rem 0 0.5rem 0;
         background: #ffffff;
         border: 1px solid rgba(0, 0, 0, 0.1);
         padding: 0.75rem;
@@ -30,10 +27,10 @@ st.markdown("""
             font-family: 'Geist', sans-serif;
             color: #555;
         ">
-            <p style="font-size: 1rem; line-height: 1.4; margin: 0 0 1rem 0; text-align: center;">
+            <p style="font-size: 1rem; line-height: 1.4; margin: 0 0 1rem 0; text-align: left;">
                 Forget Y-Combinator, forget about co-founders, and forget about years-long product discovery.
             </p>
-            <p style="font-size: 1rem; line-height: 1.4; margin: 0; text-align: center;">
+            <p style="font-size: 1rem; line-height: 1.4; margin: 0; text-align: left;">
                 Get started in minutes with our guided process:<br><br>
                 <span style="font-size: 0.9rem;">• Brainstorm and validate your ideas<br>
                 • Project your financials and market fit<br>
@@ -44,14 +41,13 @@ st.markdown("""
     </div>
 """, unsafe_allow_html=True)
 
-# <span style="font-size: 0.9rem;">Launchpad is your ultimate business ideation platform, combining AI-driven insights with practical strategies to turn your ideas into sustainable, revenue-generating ventures.</span>
 ######################################################################################
 # Feature Cards
 ######################################################################################
 
 # Define features
 features = [
-    {"title": "Ideas Journal", "icon": "📓", "description": "Your ideas in one place"},
+    {"title": "Idea Journal", "icon": "📓", "description": "Your ideas in one place"},
     {"title": "Financial Projections", "icon": "💰", "description": "Back-of-the-napkin financial projections"},
     {"title": "Business Model Canvas", "icon": "🎯", "description": "Your business model on a single page"},
     {"title": "Feedback", "icon": "🛠️", "description": "Proceed or pivot"},
