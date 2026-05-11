@@ -186,7 +186,8 @@ hr.header-divider {
 
 [data-testid="stSidebar"] .stSelectbox label,
 [data-testid="stSidebar"] .stSelectbox div,
-[data-testid="stSidebar"] span {
+[data-testid="stSidebarNav"] span,
+[data-testid="stSidebarNav"] a {
     color: white !important;
     font-family: 'Geist Mono', monospace !important;
 }
